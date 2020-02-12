@@ -1,21 +1,13 @@
 package com.example.demo.configurations;
 
-import com.example.demo.domain.ApplicationRolePermissions;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-
-import static com.example.demo.domain.ApplicationUserRoles.ADMIN;
-import static com.example.demo.domain.ApplicationUserRoles.STUDENT;
 
 @Configuration
 @EnableWebSecurity
@@ -31,20 +23,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 //                .hasAuthority(ApplicationRolePermissions.STUDENTS_READ.getPermission())
                 .and()
                 .httpBasic();
-    }
-
-    @Bean
-    @Override
-    protected UserDetailsService userDetailsService() {
-        UserDetails annasmith =
-                User
-                        .builder()
-                        .username("annasmith")
-                        .password(passwordEncoder().encode("pass123"))
-                        .authorities(ADMIN.getGrantedAuthorities())
-                        .build();
-
-        return new InMemoryUserDetailsManager(annasmith);
     }
 
     @Bean
